@@ -1,0 +1,23 @@
+/*rating*/
+.movie-rating h4{
+  font-weight: 500;
+  font-size: 42px;
+}
+.movie-rating sup{
+  font-size: 14px;
+  font-weight: 400;
+}
+.rating{
+ margin-right: 15px;
+}
+.cert{
+  border: white solid 2px;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+.rating .cert:not(:first-child) {
+  display: none;
+}

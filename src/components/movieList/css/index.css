@@ -1,0 +1,46 @@
+/*movie search list*/
+.top-results {
+  background-color: #efeef1;
+}
+.top-results p {
+  padding-left: 10px;
+}
+.movie-list {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 520px;
+  overflow-y: scroll;
+  width: 35rem;
+}
+.movie-module-wrapper {
+  background-color: #faf9fa;
+  display: block;
+  padding: 13px 10px 10px 10px;
+  color: #252937;
+  width: 100%;
+}
+.movie-module-wrapper:hover {
+  background-color: #252937;
+  color: white;
+}
+.movie-module-wrapper:hover .module-title h4 {
+  color: white;
+}
+
+a.movie-module {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 520px) {
+  .movie-list {
+    position: absolute;
+    max-height: 100%;
+    overflow-y: scroll;
+    width: 100%;
+    left: 0;
+    right: 0px;
+    top: 70px;
+  }
+}
