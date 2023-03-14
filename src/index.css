@@ -28,11 +28,12 @@ body {
 .app {
   display: flex;
 }
+
 .sidebar {
   min-width: 250px;
   background-color: #2a2c3c;
   margin-right: 1rem;
-  height: 48vh;
+  height: 100vh;
 }
 .header {
   width: 100%;

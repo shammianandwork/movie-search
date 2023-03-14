@@ -4,40 +4,13 @@ import { Link } from "react-router";
 
 import "./index.css";
 
-class Pagination extends Component {
-  render() {
-    const pageLinks = [];
-    for (let i = 1; i <= this.props.totalPages; i++) {
-      let active = this.props.page === i ? "active" : "";
-      pageLinks.push(
-        <button
-          key={i}
-          className={`pagination_btn ${active}`}
-          style={{ width: "5rem", height: "2rem", margin: "0.5rem" }}
-          onClick={() => this.props.nextPage(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return (
-      <div className="row">
-        <div className="col s12">
-          <div className="pagination">{pageLinks}</div>
-        </div>
-      </div>
-    );
-  }
-}
-
 class Home extends Component {
   constructor(props) {
     super();
     this.state = {
       recentMovies: [],
-      page: 1,
-      totalPages: 1,
+      fromDate: null,
+      toDate: null,
     };
   }
 
@@ -48,32 +21,69 @@ class Home extends Component {
   recentMovies = () => {
     loadRecentMovies().then((recentMovies) => {
       this.setState({ recentMovies });
-      this.calculateTotalPages(recentMovies.length);
     });
   };
-  calculateTotalPages = (totalItems) => {
-    const totalPages = Math.ceil(totalItems / 3);
-    this.setState({ totalPages });
+
+  sortByVote = () => {
+    const sortedMovies = this.state.recentMovies.sort((a, b) => {
+      return b.vote_average - a.vote_average;
+    });
+    this.setState({ recentMovies: sortedMovies });
+  };
+  filterByDate = () => {
+    const filteredMovies = this.state.recentMovies.filter((movie) => {
+      const releaseDate = new Date(movie.release_date);
+      return (
+        releaseDate >= this.state.fromDate && releaseDate <= this.state.toDate
+      );
+    });
+    this.setState({ recentMovies: filteredMovies });
   };
 
-  nextPage = (pageNumber) => {
-    this.setState({ page: pageNumber });
+  handleFromDateChange = (event) => {
+    const fromDate = new Date(event.target.value);
+    this.setState({ fromDate });
   };
 
-  // add pagination
+  handleToDateChange = (event) => {
+    const toDate = new Date(event.target.value);
+    this.setState({ toDate });
+  };
 
   render() {
-    const startIndex = (this.state.page - 1) * 3;
-    const endIndex = startIndex + 3;
-    const moviesToShow = this.state.recentMovies.slice(startIndex, endIndex);
+    const moviesToShow = this.state.recentMovies;
 
     return (
       <div className="recent-movies">
+        <div className="buttons">
+          <button onClick={this.sortByVote}>Sort by Vote</button>
+          {/* <button onClick={this.sortByVote}>Filter by Date</button> */}
+          <div>
+            <label htmlFor="fromDate">From Date:</label>
+            <input
+              type="date"
+              id="fromDate"
+              name="fromDate"
+              onChange={this.handleFromDateChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="toDate">To Date:</label>
+            <input
+              type="date"
+              id="toDate"
+              name="toDate"
+              onChange={this.handleToDateChange}
+            />
+          </div>
+          <button onClick={this.filterByDate}>Filter by Date</button>
+        </div>
         <div className="recent-movies-list">
           {moviesToShow.map((movie) => {
             return (
               <div className="recent-movie" key={movie.id}>
                 <Link to={`/movie/${movie.id}`}>
+                  {console.log(movie)}
                   <img
                     className="recent-movie-poster"
                     src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -84,11 +94,6 @@ class Home extends Component {
             );
           })}
         </div>
-        <Pagination
-          page={this.state.page}
-          nextPage={this.nextPage}
-          totalPages={this.state.totalPages}
-        />
       </div>
     );
   }

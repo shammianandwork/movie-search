@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { FiSearch } from "react-icons/fi";
 import "./MovieSearch.css";
 
 class MovieSearch extends Component {
@@ -11,6 +11,7 @@ class MovieSearch extends Component {
     return (
       <div className="search-field">
         <form>
+          <FiSearch className="search-icon" />
           <input
             type="text"
             onChange={this.props.updateSearch}

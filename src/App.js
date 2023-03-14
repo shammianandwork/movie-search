@@ -5,6 +5,7 @@ import SideBar from "./components/sideBar/SideBar";
 import { MovieList } from "./components/movieList/MovieList";
 import { Menu } from "./components/menu/Menu";
 import { loadMovies } from "./lib/movieService";
+import { AiFillHome } from "react-icons/ai";
 
 import {
   findId,
@@ -12,6 +13,7 @@ import {
   removeMovie,
   updateRemove,
 } from "./lib/watchListHelpers";
+import { Link } from "react-router";
 
 class App extends Component {
   constructor(props) {
@@ -97,18 +99,21 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <SideBar
-          removeMovie={this.removeMovie}
-          watchList={this.state.watchList}
-          toggleMenu={this.toggleMenu}
-          sideBar={this.state.sidebar}
-          showMenu={this.showMenu}
-        />
-
         <div className="movie-note">
+          <div className="navbar">
+            <h2>FILMORA</h2>
+            <Link to="/">
+              <AiFillHome
+                className="home-icon"
+                style={{
+                  fontSize: "2.5rem",
+                  cursor: "pointer",
+                  color: "white",
+                }}
+              />
+            </Link>
+          </div>
           <div className="header">
-            <Menu toggleMenu={this.toggleMenu} menuClass="menu" />
-
             <div className="Movie-Search">
               <MovieSearch
                 updateSearch={this.updateSearch}
